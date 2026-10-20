@@ -1,0 +1,110 @@
+[
+  {
+    "id": "xtb_opt",
+    "filename": "xtbopt_driver.py",
+    "title": "xTB Geometry Optimization",
+    "description": "Semi-empirical quantum chemical geometry optimization via GFN2-xTB.",
+    "default_parameters": {
+      "gfn": 2,
+      "charge": 0,
+      "unp_ele": 0,
+      "solvent": "none",
+      "optlevel": "normal",
+      "maxcycle": 250,
+      "acc": 1.0,
+      "etemp": 300.0,
+      "jobname": "xtb_opt"
+    }
+  },
+  {
+    "id": "xtb_md",
+    "filename": "xtbmd_driver.py",
+    "title": "xTB Molecular Dynamics",
+    "description": "Born-Oppenheimer semi-empirical molecular dynamics simulation.",
+    "default_parameters": {
+      "gfn": 2,
+      "charge": 0,
+      "solvent": "none",
+      "temp": 1200.0,
+      "time": 10.0,
+      "step": 1.0,
+      "shake": 0,
+      "sccacc": 2.0,
+      "opt_frames": false,
+      "jobname": "xtb_md"
+    }
+  },
+  {
+    "id": "rxn_network",
+    "filename": "rxn_network_driver.py",
+    "title": "Reaction Network Mapper",
+    "description": "Scans MD trajectories to discover reaction transitions and build network graph.",
+    "default_parameters": {
+      "charge": 0,
+      "rxn_filter": "smiles",
+      "jobname": "rxn_network"
+    }
+  },
+  {
+    "id": "mlff_refine",
+    "filename": "mlff_refine_driver.py",
+    "title": "SevenNet Conformer Refinement",
+    "description": "Relaxes raw MD conformers with SevenNet ML potential to evaluate 0K ground state energies.",
+    "default_parameters": {
+      "engine": "sevennet",
+      "model": "7net-0",
+      "fmax": 0.01,
+      "steps": 250,
+      "charge": 0,
+      "jobname": "mlff_refine"
+    }
+  },
+  {
+    "id": "ts_search",
+    "filename": "ts_search_driver.py",
+    "title": "Transition State Search",
+    "description": "Locates saddle points and activation barriers (Ea) via Sella + NEB with SevenNet.",
+    "default_parameters": {
+      "ts_search": "sella_neb",
+      "neb_engine": "sevennet",
+      "ts_engine": "sevennet",
+      "nimages": 10,
+      "charge": 0,
+      "jobname": "ts_search"
+    }
+  },
+  {
+    "id": "xtb_nanoreactor",
+    "filename": "xtb_nanoreactor.py",
+    "title": "Nanoreactor Flash",
+    "description": "Fast monolithic prebuilt run: parallel MD replicates & reaction network graph extraction.",
+    "default_parameters": {
+      "nreplicates": 5,
+      "workers": 2,
+      "temp": 1000.0,
+      "time": 20.0,
+      "step": 1.0,
+      "refine": "sevennet",
+      "ts_search": "sella_neb",
+      "ts_engine": "sevennet",
+      "neb_engine": "sevennet",
+      "nimages": 10,
+      "rxn_filter": "smiles",
+      "jobname": "nanoreactor"
+    }
+  },
+  {
+    "id": "mlff_opt",
+    "filename": "mlffopt_driver.py",
+    "title": "ML Force Field Relaxation",
+    "description": "Neural network potential relaxation with sub-DFT accuracy.",
+    "default_parameters": {
+      "fmax": 0.01,
+      "steps": 500,
+      "model": "medium",
+      "device": "cpu",
+      "traj": "opt.traj",
+      "jobname": "mlff_opt"
+    }
+  }
+]
